@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     // private variables, these should not be exposed through the inspector.
     private Vector3 _originalScale;
+    private Vector3 _originalPosition;
     private Rigidbody _rigidbody;
     private bool _isJumping;
 
@@ -18,21 +19,33 @@ public class Player : MonoBehaviour
     {
         // cache reference to the Scale we were at when we started.
         _originalScale = transform.localScale;
+        _originalPosition = transform.localPosition;
         _rigidbody = GetComponent<Rigidbody>();
 
         OnLand += () => _isJumping = false;
         OnJump += () => _isJumping = true;
+        OnJump += ResetSize;
     }
 
     private void Update()
     {
+        if (HandleJumping())
+        {
+            return;
+        }
+
         HandleScaling();
-        HandleJumping();
     }
 
 
     private void HandleScaling()
     {
+        // can't scale when jumping!
+        if (_isJumping)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeyCode.DownArrow))
         {
             Scale();
@@ -43,28 +56,36 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleJumping()
+    private bool HandleJumping()
     {
-        if (!Input.GetKeyDown(KeyCode.Space)) return;
+        if (!Input.GetKeyDown(KeyCode.Space)) return false;
         if (!_isJumping)
         {
             Jump();
+            return true;
         }
+
+        return false;
     }
 
     private void Scale()
     {
-        SetLocalScale(new Vector3(1, 0.5f, 1));
+        // the crouched position should be lowered by half of the height to place it at the ground.
+        // we can do this immediately rather than letting the physics take some time to fall to the ground.
+        Vector3 crouchedPosition = _originalPosition;
+        crouchedPosition.y = _originalPosition.y / 2;
+        UpdateTransform(new Vector3(1, 0.5f, 1), crouchedPosition);
     }
 
     private void ResetSize()
     {
-        SetLocalScale(_originalScale);
+        UpdateTransform(_originalScale, _originalPosition);
     }
 
-    private void SetLocalScale(Vector3 scale)
+    private void UpdateTransform(Vector3 scale, Vector3 position)
     {
         transform.localScale = scale;
+        transform.position = position;
     }
 
     private void Jump()
@@ -95,7 +116,6 @@ public class Player : MonoBehaviour
     // Any callbacks registered with hitting the ground are executed if the ground was hit.
     private bool HandleCollisionWithGround(Collision other)
     {
-
         // if we're not jumping, it doesn't matter if we are touching the ground or not.
         if (!_isJumping)
         {

@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private float jumpForce;
-
+    [SerializeField] private float attackAnimationTime;
 
     // private variables, these should not be exposed through the inspector.
     private Vector3 _originalScale;
@@ -13,14 +14,18 @@ public class Player : MonoBehaviour
     private Rigidbody _rigidbody;
     private bool _isJumping;
     private bool _isCrouched;
-    
-    
+
+
+    // Callbacks. Other components can register events for these callbacks.
+
     public Action OnJump { get; set; }
     public Action OnLand { get; set; }
 
-
     public Action OnCrouch { get; set; }
     public Action OnStand { get; set; }
+
+    public Action OnAttack { get; set; }
+    public Action OnStopAttack { get; set; }
 
     private void Awake()
     {
@@ -37,6 +42,7 @@ public class Player : MonoBehaviour
         OnStand += () => _isCrouched = false;
     }
 
+
     private void Update()
     {
         if (HandleJumping())
@@ -44,9 +50,10 @@ public class Player : MonoBehaviour
             return;
         }
 
+        StartCoroutine(HandleAttacking());
+
         HandleScaling();
     }
-
 
     private void HandleScaling()
     {
@@ -82,6 +89,16 @@ public class Player : MonoBehaviour
         }
 
         return false;
+    }
+
+    private IEnumerator HandleAttacking()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            OnAttack?.Invoke();
+            yield return new WaitForSeconds(attackAnimationTime);
+            OnStopAttack?.Invoke();
+        }
     }
 
     private void Crouch()

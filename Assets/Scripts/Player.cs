@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 
 public class Player : MonoBehaviour
@@ -69,8 +70,6 @@ public class Player : MonoBehaviour
 
 
         _elapsedTimeSinceLastAttack = attackCooldown;
-
-        _health.OnDeath += Die;
     }
 
     private void Start()
@@ -79,12 +78,6 @@ public class Player : MonoBehaviour
         Assert.IsNotNull(_rigidbody);
     }
 
-
-    // Die should be called when the player dies.
-    private void Die(Health health)
-    {
-        Debug.Log("The player died!, Reset the game or go back to checkpoint.");
-    }
 
     private void Update()
     {

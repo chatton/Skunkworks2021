@@ -78,6 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpForce: 15
   attackAnimationTime: 0.5
+  attackCooldown: 1
 --- !u!1001 &1361540261551869646
 PrefabInstance:
   m_ObjectHideFlags: 0

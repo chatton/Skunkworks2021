@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxPrefab: {fileID: 1809022330002312, guid: ed511b7776af6174e9b1255c7a81e59c, type: 3}
-  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnPosition: {fileID: 909470773}
   sfxDelay: 0.3
   sfxDelayAfter: 1
 --- !u!1 &705507993
@@ -712,6 +712,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5898328145022439741, guid: 56b2ca63921964b6baf256718368ab66, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5898328145022439741, guid: 56b2ca63921964b6baf256718368ab66, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

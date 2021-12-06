@@ -5,15 +5,31 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float attackAnimationTime;
+    [Header("Jumping Related Fields")] [SerializeField]
+    private float jumpForce;
+
+    [Header("Attack Related Fields")] [SerializeField]
+    private float attackAnimationTime;
+
+    [SerializeField] private float attackCooldown;
+
 
     // private variables, these should not be exposed through the inspector.
     private Vector3 _originalScale;
     private Vector3 _originalPosition;
     private Rigidbody _rigidbody;
+
+    // boolean indicating if the player is currently jumping.
     private bool _isJumping;
+
+    // boolean indicating if the player is currently crouching.
     private bool _isCrouched;
+
+    // boolean indicating if the player is currently crouching.
+    private bool _isAttacking;
+
+    // this is a running tally of how long has passed since the last attack.
+    private float _elapsedTimeSinceLastAttack;
 
 
     // Callbacks. Other components can register events for these callbacks.
@@ -40,6 +56,16 @@ public class Player : MonoBehaviour
 
         OnCrouch += () => _isCrouched = true;
         OnStand += () => _isCrouched = false;
+
+        OnAttack += () => _isAttacking = true;
+        OnStopAttack += () =>
+        {
+            _isAttacking = false;
+            _elapsedTimeSinceLastAttack = 0;
+        };
+
+
+        _elapsedTimeSinceLastAttack = attackCooldown;
     }
 
 
@@ -50,7 +76,14 @@ public class Player : MonoBehaviour
             return;
         }
 
-        StartCoroutine(HandleAttacking());
+        // handle cooldown on performing an attack.
+        // Can only do an attack every "attackCooldown" seconds.
+        _elapsedTimeSinceLastAttack += Time.deltaTime;
+        if (_elapsedTimeSinceLastAttack >= attackCooldown)
+        {
+            StartCoroutine(HandleAttacking());
+        }
+
 
         HandleScaling();
     }
@@ -93,7 +126,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator HandleAttacking()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W) && !_isAttacking)
         {
             OnAttack?.Invoke();
             yield return new WaitForSeconds(attackAnimationTime);

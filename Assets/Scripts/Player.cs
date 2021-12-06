@@ -6,14 +6,21 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float jumpForce;
 
+
     // private variables, these should not be exposed through the inspector.
     private Vector3 _originalScale;
     private Vector3 _originalPosition;
     private Rigidbody _rigidbody;
     private bool _isJumping;
-
+    private bool _isCrouched;
+    
+    
     public Action OnJump { get; set; }
     public Action OnLand { get; set; }
+
+
+    public Action OnCrouch { get; set; }
+    public Action OnStand { get; set; }
 
     private void Awake()
     {
@@ -24,7 +31,10 @@ public class Player : MonoBehaviour
 
         OnLand += () => _isJumping = false;
         OnJump += () => _isJumping = true;
-        OnJump += ResetSize;
+        OnJump += StandUp;
+
+        OnCrouch += () => _isCrouched = true;
+        OnStand += () => _isCrouched = false;
     }
 
     private void Update()
@@ -48,11 +58,17 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            Scale();
+            if (!_isCrouched)
+            {
+                Crouch();
+            }
         }
         else
         {
-            ResetSize();
+            if (_isCrouched)
+            {
+                StandUp();
+            }
         }
     }
 
@@ -68,18 +84,20 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    private void Scale()
+    private void Crouch()
     {
         // the crouched position should be lowered by half of the height to place it at the ground.
         // we can do this immediately rather than letting the physics take some time to fall to the ground.
         Vector3 crouchedPosition = _originalPosition;
         crouchedPosition.y = _originalPosition.y / 2;
         UpdateTransform(new Vector3(1, 0.5f, 1), crouchedPosition);
+        OnCrouch?.Invoke();
     }
 
-    private void ResetSize()
+    private void StandUp()
     {
         UpdateTransform(_originalScale, _originalPosition);
+        OnStand?.Invoke();
     }
 
     private void UpdateTransform(Vector3 scale, Vector3 position)

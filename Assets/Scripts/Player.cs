@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 public class Player : MonoBehaviour
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour
     private Vector3 _originalScale;
     private Vector3 _originalPosition;
     private Rigidbody _rigidbody;
+    private Health _health;
 
     // boolean indicating if the player is currently jumping.
     private bool _isJumping;
@@ -49,6 +51,7 @@ public class Player : MonoBehaviour
         _originalScale = transform.localScale;
         _originalPosition = transform.localPosition;
         _rigidbody = GetComponent<Rigidbody>();
+        _health = GetComponent<Health>();
 
         OnLand += () => _isJumping = false;
         OnJump += () => _isJumping = true;
@@ -66,8 +69,22 @@ public class Player : MonoBehaviour
 
 
         _elapsedTimeSinceLastAttack = attackCooldown;
+
+        _health.OnDeath += Die;
     }
 
+    private void Start()
+    {
+        Assert.IsNotNull(_health);
+        Assert.IsNotNull(_rigidbody);
+    }
+
+
+    // Die should be called when the player dies.
+    private void Die(Health health)
+    {
+        Debug.Log("The player died!, Reset the game or go back to checkpoint.");
+    }
 
     private void Update()
     {

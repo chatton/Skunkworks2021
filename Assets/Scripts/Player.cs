@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     // boolean indicating if the player is currently crouching.
     private bool _isCrouched;
 
-    // boolean indicating if the player is currently crouching.
+    // boolean indicating if the player is currently attacking.
     private bool _isAttacking;
 
     // this is a running tally of how long has passed since the last attack.
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.S))
         {
             if (!_isCrouched)
             {
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
 
     private bool HandleJumping()
     {
-        if (!Input.GetKeyDown(KeyCode.Space)) return false;
+        if (!Input.GetKeyDown(KeyCode.W)) return false;
         if (!_isJumping)
         {
             Jump();
@@ -126,7 +126,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator HandleAttacking()
     {
-        if (Input.GetKey(KeyCode.W) && !_isAttacking)
+        if (Input.GetKey(KeyCode.D) && !_isAttacking)
         {
             OnAttack?.Invoke();
             yield return new WaitForSeconds(attackAnimationTime);

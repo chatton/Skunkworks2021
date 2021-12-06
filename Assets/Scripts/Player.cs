@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private Rigidbody _rigidbody;
     private bool _isJumping;
     private bool _isCrouched;
+    private bool _isAttacking;
 
 
     // Callbacks. Other components can register events for these callbacks.
@@ -40,6 +41,9 @@ public class Player : MonoBehaviour
 
         OnCrouch += () => _isCrouched = true;
         OnStand += () => _isCrouched = false;
+        
+        OnAttack += () => _isAttacking = true;
+        OnStopAttack += () => _isAttacking = false;
     }
 
 
@@ -93,7 +97,8 @@ public class Player : MonoBehaviour
 
     private IEnumerator HandleAttacking()
     {
-        if (Input.GetKey(KeyCode.W))
+
+        if (Input.GetKey(KeyCode.W) && !_isAttacking)
         {
             OnAttack?.Invoke();
             yield return new WaitForSeconds(attackAnimationTime);

@@ -4,9 +4,10 @@ public class PlayerAnimator : MonoBehaviour
 {
     private Animator _animator;
     private Player _player;
-    
+
     private static readonly int Crouch = Animator.StringToHash("Crouch");
     private static readonly int Stand = Animator.StringToHash("Stand");
+    private static readonly int Attack1 = Animator.StringToHash("Attack1");
 
 
     void Awake()
@@ -17,17 +18,28 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Start()
     {
-        // _player.OnCrouch += PlayCrouchAnimation;
-        // _player.OnStand += PlayStandAnimation;
+        _player.OnAttack += PlayAttackAnimation;
+        _player.OnStopAttack += StopAttackAnimation;
     }
 
-    private void PlayCrouchAnimation()
+    private void PlayAttackAnimation()
     {
-        _animator.SetTrigger(Crouch);
+        _animator.SetBool(Attack1, true);
     }
+
     
-    private void PlayStandAnimation()
+    private void StopAttackAnimation()
     {
-        _animator.SetTrigger(Stand);
+        _animator.SetBool(Attack1, false);
     }
+    //
+    // private void PlayCrouchAnimation()
+    // {
+    //     _animator.SetTrigger(Crouch);
+    // }
+    //
+    // private void PlayStandAnimation()
+    // {
+    //     _animator.SetTrigger(Stand);
+    // }
 }

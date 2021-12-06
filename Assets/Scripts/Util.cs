@@ -13,4 +13,9 @@ public static class Util
     {
         return col.gameObject.IsPlayer();
     }
+    
+    public static bool IsPlayer(this Collision col)
+    {
+        return col.gameObject.IsPlayer();
+    }
 }

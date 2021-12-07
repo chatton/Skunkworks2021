@@ -8,7 +8,7 @@ public class Health : MonoBehaviour
 
 
     public Action<Health> OnTakeDamage { get; set; }
-    public Action<Health> OnDeath;
+    public Action<Health> OnDeath { get; set; }
 
     public bool IsDead => health <= 0;
     public int CurrentHealth => health;

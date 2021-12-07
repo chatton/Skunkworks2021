@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: New SO Sound Effect
   m_EditorClassIdentifier: 
   jumpEffect: {fileID: 8300000, guid: 97674623aed3447bd8e3f89533a47283, type: 3}
+  crouchEffect: {fileID: 8300000, guid: aaca35737147d4d6196280fd42b5df73, type: 3}
+  attackEffect: {fileID: 8300000, guid: aaca35737147d4d6196280fd42b5df73, type: 3}

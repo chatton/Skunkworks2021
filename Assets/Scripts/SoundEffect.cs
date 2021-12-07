@@ -6,6 +6,7 @@ public class SoundEffect : MonoBehaviour
 {
     AudioSource audioSource;
     Player player;
+    public SOSoundEffect sOSoundEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +18,7 @@ public class SoundEffect : MonoBehaviour
 
     private void PlayJumpSound()
     {
-        audioSource = GetComponent<AudioSource>();
-        audioSource.Play();
+        AudioSource.PlayClipAtPoint(sOSoundEffect.jumpEffect, Camera.main.transform.position);
     } 
     // Update is called once per frame
     void Update()

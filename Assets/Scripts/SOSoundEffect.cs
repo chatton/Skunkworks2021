@@ -6,5 +6,7 @@ using UnityEngine;
 public class SOSoundEffect :ScriptableObject
 {
     public AudioClip jumpEffect;
+    public AudioClip crouchEffect;
+    public AudioClip attackEffect;
 
 }

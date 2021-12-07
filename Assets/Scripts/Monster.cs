@@ -3,10 +3,7 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [SerializeField] private int damage = 1;
-    [SerializeField] private float deathTimer;
-
-
-    // the player health
+    
     private Health _playerHealth;
     private Animator _animator;
     private BoxCollider _collider;
@@ -23,7 +20,6 @@ public class Monster : MonoBehaviour
         _areaTrigger = GetComponentInChildren<AreaTrigger>();
         _collider = GetComponent<BoxCollider>();
         _rigidbody = GetComponent<Rigidbody>();
-        ;
     }
 
     private void Start()
@@ -45,30 +41,11 @@ public class Monster : MonoBehaviour
         _playerHealth.TakeDamage(damage);
     }
 
-    // private void OnCollisionEnter(Collision other)
-    // {
-    //     // only handle the case of a player walking into it.
-    //     if (!other.IsPlayer())
-    //     {
-    //         return;
-    //     }
-    //
-    //     _animator.SetBool(Attacking, true);
-    //     _playerHealth.TakeDamage(damage);
-    // }
-
     public void Kill()
     {
         _collider.enabled = false;
         _rigidbody.isKinematic = true;
         _areaTrigger.GetComponent<Collider>().enabled = false;
         _animator.SetTrigger(Die);
-        // StartCoroutine(KillRoutine());
     }
-
-    // private IEnumerator KillRoutine()
-    // {
-    // disable the collider so no collisions can happen again.
-
-    // }
 }

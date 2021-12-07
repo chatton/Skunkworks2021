@@ -11,11 +11,11 @@ public class FireBall : MonoBehaviour
             return;
         }
         
-        Obstacle obstacle = other.gameObject.GetComponent<Obstacle>();
+        Monster monster = other.gameObject.GetComponent<Monster>();
         // the thing we hit is an obstacle! Let's destroy it.
-        if (obstacle != null)
+        if (monster != null)
         {
-            Destroy(obstacle.gameObject);
+            monster.Kill();
         }
     }
     

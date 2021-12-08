@@ -81,6 +81,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        // check player health
+        _health = GetComponent<Health>();
+        if (_health.CurrentHealth <= 0)
+        {
+            return;
+        }
+
         if (HandleJumping())
         {
             return;

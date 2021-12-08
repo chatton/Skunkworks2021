@@ -8,6 +8,7 @@ public class FireBall : MonoBehaviour
         // our own fireball can't hit the player. Just ignore the collision.
         if (other.IsPlayer())
         {
+            Physics.IgnoreCollision(other.collider, GetComponent<Collider>());
             return;
         }
         

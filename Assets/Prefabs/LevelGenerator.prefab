@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24636a2741f7c4ee28e76ad94c4f861e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberOfSegments: 5
+  NumberOfSegments: 20
   LevelSegments:
   - {fileID: 7089627095399119732, guid: f973760da452345dcb43f5ba03a4d4f7, type: 3}
   - {fileID: 4638551805607823347, guid: a090c0e95bd3b47cbbd8afb2d4a36249, type: 3}
   playerPrefab: {fileID: 5898328145022439743, guid: 56b2ca63921964b6baf256718368ab66, type: 3}
+  level: {fileID: 0}

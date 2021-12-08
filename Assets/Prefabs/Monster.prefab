@@ -46,8 +46,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.82375836, y: 0.64550436, z: 1}
+  m_Center: {x: -0.098471045, y: -0.17724782, z: 0}
 --- !u!114 &1484909047265815965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +61,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  deathTimer: 3
 --- !u!54 &7898110487485840392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,8 +120,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.60253525, y: 0.24401075, z: 1}
+  m_Center: {x: 0.19873238, y: -0.37799463, z: 0}
 --- !u!114 &1256800387263637327
 MonoBehaviour:
   m_ObjectHideFlags: 0

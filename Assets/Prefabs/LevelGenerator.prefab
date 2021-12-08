@@ -47,3 +47,4 @@ MonoBehaviour:
   LevelSegments:
   - {fileID: 7089627095399119732, guid: f973760da452345dcb43f5ba03a4d4f7, type: 3}
   - {fileID: 4638551805607823347, guid: a090c0e95bd3b47cbbd8afb2d4a36249, type: 3}
+  playerPrefab: {fileID: 5898328145022439743, guid: 56b2ca63921964b6baf256718368ab66, type: 3}

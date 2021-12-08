@@ -2,11 +2,12 @@ using UnityEngine;
 
 namespace EditorScripts
 {
-    // [ExecuteInEditMode]
-    public class SnapToGrid : MonoBehaviour
+    public class SnapToGrid : EditorOnlyMonoBehaviour
     {
-        void Update() => transform.position = ClampToInt(transform.position);
-
+        protected override void DoUpdate()
+        {
+            transform.position = ClampToInt(transform.position);
+        }
 
         Vector3 ClampToInt(Vector3 pos)
         {

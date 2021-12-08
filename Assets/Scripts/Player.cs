@@ -173,6 +173,7 @@ public class Player : MonoBehaviour
             throw new Exception("Jump cannot be called if the player is already jumping!");
         }
 
+        Debug.Log("Jumping!", gameObject);
         // any registered callbacks get called when jump is pressed.
         // we can play things like animations and sound effects this way.
         OnJump?.Invoke();
